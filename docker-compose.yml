@@ -1,0 +1,15 @@
+version: '3.8'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    volumes:
+      - .:/app  # Monta o diretório atual no contêiner
+      - /app/venv  # Evita que o ambiente virtual local sobrescreva o do contêiner
+    ports:
+      - "8501:8501"  # Mapeia a porta do Streamlit para a porta do host
+    environment:
+      - PYTHONUNBUFFERED=1
+      - PYTHONPATH=/app
+    command: streamlit run app/main.py --server.port=8501 --server.address=0.0.0.0
